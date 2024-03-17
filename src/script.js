@@ -9,17 +9,9 @@ import axios from 'axios'
 
 
 
-// const input = prompt("Enter your name to display")
-// const name = input.charAt(0).toUpperCase() + input.slice(1)
-const name = "suryansh"
-
-
-const intialwebsite = document.referrer
-const usertimezone = Intl.DateTimeFormat().resolvedOptions().timeZone + " " + Intl.DateTimeFormat().resolvedOptions().locale
-var device = "";
-
-console.log("device name is ", usertimezone);
-
+const input = prompt("Enter your name to display") 
+const name = input.charAt(0).toUpperCase() + input.slice(1)
+// const name = "suryansh"
 
 const scene = new three.Scene();
 
@@ -77,7 +69,7 @@ if (isMobile()) {
 
 } else {
 
-    gsap.to(camera.position, { x: 1, z: 6, duration: 2 })
+    gsap.to(camera.position, { x: 1, z: 8, duration: 2 })
     gsap.to(camera.rotation, { y: .1, delay: .5, duration: 1.5 })
     // console.log("Desktop device detected");
 }
@@ -89,15 +81,16 @@ const light = new three.AmbientLight("000000", 1)
 const textureloader = new three.TextureLoader()
 const donutmatcap = textureloader.load(`./textures/matcaps/${4}.png`)
 const boxmatcap = textureloader.load(`./textures/matcaps/${Math.floor(Math.random() * 8) + 1}.png`)
-// const textmatcap = textureloader.load(`./textures/matcaps/${8}.png`)
-const textmaterial = new three.MeshNormalMaterial()
+const textmatcap = textureloader.load(`./textures/matcaps/${7}.png`)
+const textmaterial1 = new three.MeshNormalMaterial()
+const textmaterial2 = new three.MeshMatcapMaterial({matcap:textmatcap})
 const donutmaterial = new three.MeshMatcapMaterial({ matcap: donutmatcap });
 const boxmaterial = new three.MeshMatcapMaterial({ matcap: boxmatcap })
 
 const fontloader = new FontLoader()
 
 fontloader.load('./fonts/helvetiker_bold.typeface.json', (font) => {
-    const textgeometry = new TextGeometry(`Hello ${name} \nWelcome To \nDonut World`,
+    const textgeometry = new TextGeometry(`Hello ${name}, \nWelcome To \nDonut World`,
         {
             font: font,
             size: 1,
@@ -111,19 +104,19 @@ fontloader.load('./fonts/helvetiker_bold.typeface.json', (font) => {
             curveSegments: 10
         });
     textgeometry.center()
-    const namegeomtry = new TextGeometry('surya', {
+    const namegeomtry = new TextGeometry(name, {
         font: font,
         size: 1,
         height: .3
     })
 
-    for (let i = 0; i < 100; i++) {
-        const textmesh = new three.Mesh(namegeomtry, textmaterial)
+    for (let i = 0; i < 50; i++) {
+        const textmesh = new three.Mesh(namegeomtry, textmaterial2)
 
         const radius = Math.PI * 2 * Math.random()
-        textmesh.position.x = Math.cos(radius) * (9 + Math.random() * 70)
-        textmesh.position.y = (Math.random() - 0.5) * 100
-        textmesh.position.z = Math.sin(radius) * (3 + Math.random() * 70)
+        textmesh.position.x = Math.cos(radius) * (Math.random() * 50)
+        textmesh.position.y = (Math.random() - 0.5) *30
+        textmesh.position.z = Math.sin(radius) * (Math.random() * 50)
 
         // textmesh.rotation.x = (Math.random() - .5) * 70
         textmesh.rotation.y = (Math.random() - 0.5) * 70
@@ -135,7 +128,7 @@ fontloader.load('./fonts/helvetiker_bold.typeface.json', (font) => {
 
     }
 
-    const text = new three.Mesh(textgeometry, textmaterial)
+    const text = new three.Mesh(textgeometry, textmaterial1)
     scene.add(text)
     // camera.lookAt(text)
 
@@ -154,9 +147,9 @@ for (let i = 0; i < 1000; i++) {
     const donut = new three.Mesh(torus, donutmaterial)
     const box = new three.Mesh(boxgeometry, boxmaterial)
     const radius = Math.PI * 2 * Math.random()
-    donut.position.x = Math.cos(radius) * (9 + Math.random() * 70)
+    donut.position.x = Math.cos(radius) * (Math.random() * 70)
     donut.position.y = (Math.random() - 0.5) * 70
-    donut.position.z = Math.sin(radius) * (3 + Math.random() * 70)
+    donut.position.z = Math.sin(radius) * ( Math.random() * 70)
 
     donut.rotation.x = Math.random() * Math.PI
     donut.rotation.y = Math.random() * Math.PI
@@ -179,10 +172,16 @@ for (let i = 0; i < 1000; i++) {
     // scene.add(box)
 }
 console.timeEnd("donut")
-// textmaterial.wireframe = true
 
-// axios.defaults.baseURL = "https://rich-cyan-chinchilla-wrap.cyclic.app/"
-// axios.defaults.baseURL = "http://localhost:3000/"
+const intialwebsite = document.referrer
+const usertimezone = Intl.DateTimeFormat().resolvedOptions().timeZone + " " + Intl.DateTimeFormat().resolvedOptions().locale
+var device = "";
+
+console.log("device name is ", usertimezone);
+
+
+axios.defaults.baseURL = import.meta.env.VITE_AXIOSPOST
+
 
 axios.post("/donutWorld", { name, device, intialwebsite, usertimezone })
     .then(function (response) {
