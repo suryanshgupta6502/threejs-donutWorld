@@ -11,7 +11,7 @@ import axios from 'axios'
 
 const input = prompt("Enter your name to display") 
 const name = input.charAt(0).toUpperCase() + input.slice(1)
-// const name = "suryansh"
+
 
 const scene = new three.Scene();
 
@@ -48,11 +48,6 @@ orbitcontrol.enableDamping = true
 orbitcontrol.maxDistance = 50
 console.log(orbitcontrol);
 
-
-
-// if (window.innerWidth <= 430 && window.innerHeight <= 700) {
-//     gsap.to(camera.position, { z: 13, duration: 2 })
-// }
 
 function isMobile() {
     const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
@@ -134,11 +129,7 @@ fontloader.load('./fonts/helvetiker_bold.typeface.json', (font) => {
 
 
 })
-// const axecontol = new three.AxesHelper()
-// scene.add(axecontol)
-// const textureloader=new three.TextureLoader()
-// const texture= textureloader.load('/textures/matcaps/1.png')
-// const donutmaterial = new three.MeshBasicMaterial({color:"red"})
+
 const torus = new three.TorusGeometry();
 const boxgeometry = new three.BoxGeometry();
 console.time("donut")
