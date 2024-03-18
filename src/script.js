@@ -58,13 +58,13 @@ function isMobile() {
 
 if (isMobile()) {
     // console.log("Mobile device detected");
-    gsap.to(camera.position, { x: 2, y: 3, z: 14, duration: 2 })
+    gsap.to(camera.position, { x: 3, y: 3, z: 14, duration: 2 })
     gsap.to(camera.rotation, { y: .5, delay: .5, duration: 2 })
 
 
 } else {
 
-    gsap.to(camera.position, { x: 1, z: 8, duration: 2 })
+    gsap.to(camera.position, { x: 2, z: 8, duration: 2 })
     gsap.to(camera.rotation, { y: .1, delay: .5, duration: 1.5 })
     // console.log("Desktop device detected");
 }
